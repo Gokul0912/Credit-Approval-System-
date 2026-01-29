@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+<h2>View Loan</h2>
+
+<input id="lid" placeholder="Loan ID">
+<button onclick="viewLoan()">Search</button>
+
+<div class="result" id="res"></div>
+</div>
+
+<script>
+function viewLoan(){
+fetch("/api/loans/view-loan/"+lid.value+"/")
+.then(r=>r.json())
+.then(d=>{
+res.innerHTML=
+"Customer : "+d.customer.first_name+
+"<br> Amount : "+d.loan_amount+
+"<br> EMI : "+d.monthly_installment;
+})
+}
+</script>
+
+{% endblock %}

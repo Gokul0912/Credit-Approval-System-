@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+<h2>Create Loan</h2>
+
+<input id="cid" placeholder="Customer ID">
+<input id="amount" placeholder="Loan Amount">
+<input id="rate" placeholder="Interest Rate">
+<input id="tenure" placeholder="Tenure">
+
+<button onclick="createLoan()">Create</button>
+
+<div class="result" id="out"></div>
+</div>
+
+<script>
+function createLoan(){
+fetch("/api/loans/create-loan/",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+customer_id:cid.value,
+loan_amount:amount.value,
+interest_rate:rate.value,
+tenure:tenure.value
+})
+})
+.then(r=>r.json())
+.then(d=>{
+out.innerHTML="Loan ID : "+d.loan_id;
+})
+}
+</script>
+
+{% endblock %}

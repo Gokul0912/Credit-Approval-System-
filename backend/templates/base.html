@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Credit Approval System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo">CreditSys</h2>
+        <nav>
+            <a href="/">Dashboard</a>
+            <a href="/register-ui/">Register Customer</a>
+            <a href="/eligibility-ui/">Check Eligibility</a>
+            <a href="/create-loan-ui/">Create Loan</a>
+            <a href="/view-loan-ui/">View Loan</a>
+            <a href="/view-customer-loans-ui/">Customer Loans</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+</body>
+</html>

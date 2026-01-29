@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+<h2>Check Eligibility</h2>
+
+<input id="cid" placeholder="Customer ID">
+<input id="amount" placeholder="Loan Amount">
+<input id="rate" placeholder="Interest Rate">
+<input id="tenure" placeholder="Tenure">
+
+<button onclick="check()">Check</button>
+
+<div class="result" id="res"></div>
+</div>
+
+<script>
+function check(){
+fetch("/api/loans/check-eligibility/",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+customer_id:cid.value,
+loan_amount:amount.value,
+interest_rate:rate.value,
+tenure:tenure.value
+})
+})
+.then(r=>r.json())
+.then(d=>{
+res.innerHTML=
+"Approved : "+d.approval+
+"<br> EMI : "+d.monthly_installment+
+"<br> Rate : "+d.corrected_interest_rate;
+})
+}
+</script>
+
+{% endblock %}
