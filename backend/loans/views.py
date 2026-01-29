@@ -10,7 +10,7 @@ from loans.services import calculate_credit_score
 from common.utils import calculate_emi
 
 
-# ---------------- CHECK ELIGIBILITY ----------------
+
 
 @api_view(["POST"])
 def check_eligibility(request):
@@ -63,7 +63,6 @@ def check_eligibility(request):
     })
 
 
-# ---------------- CREATE LOAN ----------------
 
 @api_view(["POST"])
 def create_loan(request):
@@ -138,7 +137,6 @@ def create_loan(request):
     }, status=201)
 
 
-# ---------------- VIEW SINGLE LOAN ----------------
 
 @api_view(["GET"])
 def view_loan(request, loan_id):
@@ -162,7 +160,7 @@ def view_loan(request, loan_id):
     })
 
 
-# ---------------- VIEW CUSTOMER LOANS ----------------
+
 
 @api_view(["GET"])
 def view_loans_by_customer(request, customer_id):

@@ -1,16 +1,8 @@
 from pathlib import Path
 import os
 
-# -------------------------------------------------
-# BASE
-# -------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# -------------------------------------------------
-# SECURITY
-# -------------------------------------------------
 
 SECRET_KEY = 'django-insecure-change-this'
 
@@ -19,9 +11,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
-# -------------------------------------------------
-# APPS
-# -------------------------------------------------
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,9 +28,7 @@ INSTALLED_APPS = [
 ]
 
 
-# -------------------------------------------------
-# MIDDLEWARE
-# -------------------------------------------------
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,18 +41,12 @@ MIDDLEWARE = [
 ]
 
 
-# -------------------------------------------------
-# URLS / WSGI
-# -------------------------------------------------
 
 ROOT_URLCONF = 'core.urls'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# -------------------------------------------------
-# TEMPLATES
-# -------------------------------------------------
 
 TEMPLATES = [
     {
@@ -83,9 +65,7 @@ TEMPLATES = [
 ]
 
 
-# -------------------------------------------------
-# DATABASE (PostgreSQL - Docker)
-# -------------------------------------------------
+
 
 DATABASES = {
     'default': {
@@ -99,9 +79,6 @@ DATABASES = {
 }
 
 
-# -------------------------------------------------
-# PASSWORD VALIDATION
-# -------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -111,19 +88,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# -------------------------------------------------
-# LANGUAGE / TIME
-# -------------------------------------------------
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
-# -------------------------------------------------
-# STATIC FILES
-# -------------------------------------------------
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
