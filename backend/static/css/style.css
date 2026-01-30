@@ -92,3 +92,29 @@ margin-top:15px;
 color:#22c55e;
 font-weight:bold;
 }
+.card{
+    background:#0f172a;
+    padding:20px;
+    border-radius:10px;
+    margin-top:20px;
+    box-shadow:0 0 12px rgba(0,255,255,0.2);
+}
+
+.card-row{
+    margin:6px 0;
+    font-size:15px;
+}
+
+.good{color:#22c55e;font-weight:bold;}
+.bad{color:#ef4444;font-weight:bold;}
+.card{
+  background:#0f172a;
+  padding:18px;
+  border-radius:8px;
+  margin-top:15px;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+
+.card-row{
+  margin:6px 0;
+}

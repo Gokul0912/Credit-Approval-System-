@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from datetime import date, timedelta
+from django.views.decorators.csrf import csrf_exempt
+
 
 from customers.models import Customer
 from loans.models import Loan
@@ -63,7 +65,7 @@ def check_eligibility(request):
     })
 
 
-
+@csrf_exempt
 @api_view(["POST"])
 def create_loan(request):
 

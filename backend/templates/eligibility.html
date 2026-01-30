@@ -1,39 +1,83 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card">
-<h2>Check Eligibility</h2>
 
-<input id="cid" placeholder="Customer ID">
-<input id="amount" placeholder="Loan Amount">
-<input id="rate" placeholder="Interest Rate">
-<input id="tenure" placeholder="Tenure">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Eligibility</title>
+</head>
 
-<button onclick="check()">Check</button>
+<body>
 
-<div class="result" id="res"></div>
-</div>
+<h2>Check Loan Eligibility</h2>
+
+<form id="eligibilityForm">
+    {% csrf_token %}
+
+    <input type="number" id="customer_id" placeholder="Customer ID"><br><br>
+    <input type="number" id="loan_amount" placeholder="Loan Amount"><br><br>
+    <input type="number" id="interest_rate" placeholder="Interest Rate"><br><br>
+    <input type="number" id="tenure" placeholder="Tenure"><br><br>
+
+    <button type="submit">Check Eligibility</button>
+</form>
+
+<p id="result"></p>
 
 <script>
-function check(){
-fetch("/api/loans/check-eligibility/",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-customer_id:cid.value,
-loan_amount:amount.value,
-interest_rate:rate.value,
-tenure:tenure.value
-})
-})
-.then(r=>r.json())
-.then(d=>{
-res.innerHTML=
-"Approved : "+d.approval+
-"<br> EMI : "+d.monthly_installment+
-"<br> Rate : "+d.corrected_interest_rate;
-})
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
+
+const csrftoken = getCookie('csrftoken');
+
+document.getElementById("eligibilityForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const response = await fetch("/api/loans/check-eligibility/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken
+        },
+        body: JSON.stringify({
+            customer_id: document.getElementById("customer_id").value,
+            loan_amount: document.getElementById("loan_amount").value,
+            interest_rate: document.getElementById("interest_rate").value,
+            tenure: document.getElementById("tenure").value
+        })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("result").innerHTML = `
+<div class="card">
+  <div class="card-row"><b>Customer ID:</b> ${data.customer_id}</div>
+  <div class="card-row"><b>Approved:</b> ${data.approval ? "YES" : "NO"}</div>
+  <div class="card-row"><b>Interest Rate:</b> ${data.corrected_interest_rate}%</div>
+  <div class="card-row"><b>Tenure:</b> ${data.tenure} months</div>
+  <div class="card-row"><b>Monthly EMI:</b> ₹${data.monthly_installment}</div>
+</div>
+`;
+
+});
+
 </script>
 
+</body>
+</html>
 {% endblock %}

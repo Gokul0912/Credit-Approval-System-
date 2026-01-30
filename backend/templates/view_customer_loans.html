@@ -1,29 +1,54 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card">
-<h2>Customer Loans</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Customer Loans</title>
+</head>
 
-<input id="cid" placeholder="Customer ID">
-<button onclick="viewLoans()">Search</button>
+<body>
 
-<div class="result" id="res"></div>
-</div>
+<h2>View Customer Loans</h2>
+
+<input type="number" id="customer_id" placeholder="Customer ID"><br><br>
+
+<button onclick="viewLoans()">View Loans</button>
+
+<pre id="result"></pre>
 
 <script>
-function viewLoans(){
-fetch("/api/loans/view-loans/"+cid.value+"/")
-.then(r=>r.json())
-.then(d=>{
-res.innerHTML="";
-d.forEach(l=>{
-res.innerHTML+=
-"Loan ID:"+l.loan_id+
-" EMI:"+l.monthly_installment+
-"<br>";
+
+async function viewLoans(){
+
+    const customerId = document.getElementById("customer_id").value;
+
+    const response = await fetch(
+        "/api/loans/view-loans/" + customerId + "/"
+    );
+
+    const data = await response.json();
+
+    let html = "";
+
+data.loans.forEach(loan => {
+  html += `
+  <div class="card">
+    <div class="card-row"><b>Loan ID:</b> ${loan.loan_id}</div>
+    <div class="card-row"><b>Amount:</b> ₹${loan.loan_amount}</div>
+    <div class="card-row"><b>Interest:</b> ${loan.interest_rate}%</div>
+    <div class="card-row"><b>Tenure:</b> ${loan.tenure} months</div>
+    <div class="card-row"><b>EMI:</b> ₹${loan.monthly_installment}</div>
+  </div>
+  `;
 });
-})
+
+document.getElementById("result").innerHTML = html;
+
 }
+
 </script>
 
+</body>
+</html>
 {% endblock %}
