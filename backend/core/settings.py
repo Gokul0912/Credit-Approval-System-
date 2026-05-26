@@ -1,14 +1,16 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR.parent / ".env")
 
-SECRET_KEY = 'django-insecure-change-this'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-only-change-me')
 
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')]
 
 
 
@@ -73,7 +75,7 @@ DATABASES = {
         'USER': os.environ.get('POSTGRES_USER', 'credituser'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'creditpass'),
         'HOST': os.environ.get('POSTGRES_HOST', 'db'),
-        'PORT': 5432,
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 

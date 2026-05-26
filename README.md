@@ -1,44 +1,69 @@
-Credit Approval System – Backend Assignment
+# Credit Approval System API
 
-Hi, This project is a Credit Approval System that I built as part of a backend internship assignment. The goal of this project is to design and implement a backend service that can register customers, evaluate loan eligibility based on historical data, create loans, and allow viewing of loan and customer details.
+A Django REST Framework backend for a credit approval workflow. The service imports customer and loan data, calculates credit limits and credit scores, evaluates loan eligibility, creates approved loans, and exposes customer/loan lookup APIs.
 
-I have used Django, Django Rest Framework, PostgreSQL, and Docker to build and containerize the entire system. The application also supports importing initial customer and loan data from Excel files.
+## What This Demonstrates
 
-TECH STACK
+- Django and Django REST Framework API design
+- PostgreSQL-backed domain models with Docker Compose
+- Service-layer business logic for credit scoring and EMI calculation
+- Excel import commands for initial customer and loan data
+- Simple server-rendered dashboard for manual API testing
 
-Python - Django 5 - Django Rest Framework - PostgreSQL - Docker & Docker Compose - Pandas
-FEATURES IMPLEMENTED
+## Tech Stack
 
-Register new customers Automatically calculate approved credit limit based on salary Import customers and loans from Excel files Check loan eligibility based on historical loan data Create new loans after eligibility check View loan details by loan ID View all loans for a specific customer Django Admin panel for managing customers and loans Simple HTML/CSS dashboard for interacting with APIs
-HOW TO RUN
+- Python
+- Django
+- Django REST Framework
+- PostgreSQL
+- Docker and Docker Compose
+- Pandas / OpenPyXL
 
-docker compose up –build
+## Features
 
-Open: http://localhost:8000
+- Register customers and calculate approved credit limits
+- Import customer and loan records from Excel files
+- Check loan eligibility using historical repayment behavior
+- Create loans with corrected interest rates where required
+- View a loan by ID
+- View all loans for a customer
+- Admin dashboard for manual data inspection
 
-CREATE ADMIN USER
+## Run Locally
 
+```bash
+docker compose up --build
+```
+
+The app runs at:
+
+```text
+http://localhost:8000
+```
+
+Create an admin user:
+
+```bash
 docker compose exec web python manage.py createsuperuser
+```
 
-Open: http://localhost:8000/admin/
+Import sample data:
 
-IMPORT INITIAL DATA
+```bash
+docker compose exec web python manage.py import_customers backend/customer_data.xlsx
+docker compose exec web python manage.py import_loans backend/loan_data.xlsx
+```
 
-docker compose exec web python manage.py importcustomers customerdata.xlsx docker compose exec web python manage.py importloans loandata.xlsx
+## API Overview
 
-CREDIT LOGIC (SUMMARY)
+```text
+POST /api/register/
+POST /api/check-eligibility/
+POST /api/create-loan/
+GET  /api/view-loan/<loan_id>/
+GET  /api/view-loans/<customer_id>/
+```
 
-Past loan repayment history - Number of loans - Current loan activity - Total loan volume - EMI vs salary
+## Portfolio Notes
 
-If total EMI > 50% of salary → reject If total loans > approved limit → reject
-
-UI
-
-Simple HTML/CSS dashboard inside Django templates.
-
-WHY I BUILT IT THIS WAY
-
-Clean separation of apps - Production-like database - Dockerized environment - Easy to extend
-FUTURE IMPROVEMENTS
-
-Authentication Better scoring model Unit tests React frontend
+This project is intentionally backend-focused. The strongest parts are the domain modeling, API endpoints, import commands, and credit decision logic. Future improvements would include authentication, fuller test coverage, OpenAPI docs, and replacing the simple HTML dashboard with a separate frontend.

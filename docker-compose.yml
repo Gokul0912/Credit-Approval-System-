@@ -14,9 +14,9 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_DB: creditdb
-      POSTGRES_USER: credituser
-      POSTGRES_PASSWORD: creditpass
+      POSTGRES_DB: ${POSTGRES_DB:-creditdb}
+      POSTGRES_USER: ${POSTGRES_USER:-credituser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-creditpass}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
